@@ -1,3 +1,5 @@
+//Program by Luchangcheng 2019/12/1
+//Compiler: clang version 9.0.0 (tags/RELEASE_900/final) tested on VScode
 #include <iostream>
 using namespace std;
 
