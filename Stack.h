@@ -1,3 +1,5 @@
+//Program by Luchangcheng 2019/12/1
+//Compiler:MSVC 14.23  Visual Studio Community 2019
 template <class T>
 class Stack
 {
