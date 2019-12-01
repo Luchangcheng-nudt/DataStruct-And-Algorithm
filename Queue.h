@@ -1,3 +1,5 @@
+//Program by Luchangcheng 2019/12/1
+//Compiler: MSVC 14.23   tested on Visual Studio Community 2019
 template<class T>
 class Queue
 {
@@ -33,7 +35,7 @@ Queue<T>::~Queue()
 }
 
 template<class T>
-void Queue<T>::EnterQueue(T data)
+inline void Queue<T>::EnterQueue(T data)
 {
 	Node* node = new Node;
 	node->data = data;
@@ -46,7 +48,7 @@ void Queue<T>::EnterQueue(T data)
 }
 
 template<class T>
-T Queue<T>::LeaveQueue()
+inline T Queue<T>::LeaveQueue()
 {
 	T ans = this->head->data;
 	if (--this->length == 0)
@@ -62,7 +64,7 @@ T Queue<T>::LeaveQueue()
 }
 
 template<class T>
-bool Queue<T>::isEmpty()
+inline bool Queue<T>::isEmpty()
 {
 	if (this->length == 0)
 		return true;
@@ -71,7 +73,7 @@ bool Queue<T>::isEmpty()
 }
 
 template<class T>
-int Queue<T>::size()
+inline int Queue<T>::size()
 {
 	return this->size;
 }
