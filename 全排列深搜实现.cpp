@@ -1,6 +1,7 @@
+//Program by Luchangcheng 2019/12/2
+//Compiler: clang version 9.0.0 (tags/RELEASE_900/final)  tested on VSCode
 #include <iostream>
 using namespace std;
-
 
 void allSort(int arr[], int step, int size, int list[], bool book[]);
 int main()
