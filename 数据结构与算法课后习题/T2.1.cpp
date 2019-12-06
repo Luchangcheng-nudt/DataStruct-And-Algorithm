@@ -1,10 +1,12 @@
 //Programmer: Luchangcheng  2019/12/6
 //Compiler: MSVC14.23  tested on Visual Studio Community 2019
+//方法：运用二叉搜索树解决
 #include <iostream>
 #include <stack>
 using namespace std;
 
 void BinarySearchTree(int step, stack<int> spnd, string ans);
+int cnt = 0;
 int main()
 {
 	int step = 1;
@@ -12,6 +14,7 @@ int main()
 	temp.push(1);
 	string ans = "";
 	BinarySearchTree(1, temp, ans);
+	cout << "共 " << cnt << " 种可能性" << endl;
 	return 0;
 }
 
@@ -26,6 +29,7 @@ void BinarySearchTree(int step, stack<int> spnd, string ans)
 			spnd.pop();
 		}
 		ans.pop_back();
+		cnt++;
 		cout << ans << endl;
 		return;
 	}
