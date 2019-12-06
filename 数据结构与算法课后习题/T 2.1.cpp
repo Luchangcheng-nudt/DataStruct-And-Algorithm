@@ -3,6 +3,7 @@
 //题目：正整数1、2、3、4依次进栈，写出所有可能的出栈次序
 //方法：运用二叉搜索树解决
 #include <iostream>
+#include <string>
 #include <stack>
 using namespace std;
 
@@ -21,11 +22,11 @@ int main()
 
 void BinarySearchTree(int step, stack<int> spnd, string ans)
 {
-	if (step == 4)
+	if (step == 11)
 	{
 		while (!spnd.empty())
 		{
-			ans += spnd.top() + '0';
+			ans += to_string(spnd.top());
 			ans += " ";
 			spnd.pop();
 		}
@@ -41,7 +42,7 @@ void BinarySearchTree(int step, stack<int> spnd, string ans)
 
 	if (!spnd.empty())
 	{
-		ans += spnd.top() + '0';
+		ans += to_string(spnd.top());
 		ans += " ";
 		spnd.pop();
 		BinarySearchTree(step, spnd, ans);
