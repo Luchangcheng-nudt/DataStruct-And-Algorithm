@@ -1,3 +1,5 @@
+//Program by Luchangcheng  2019/12/6
+//Compiler: MSVC14.23  tested on Visual Studio 2019
 #include <iostream>
 #include <stack>
 #include <map>
