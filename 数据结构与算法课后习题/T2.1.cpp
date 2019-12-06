@@ -1,5 +1,6 @@
 //Programmer: Luchangcheng  2019/12/6
 //Compiler: MSVC14.23  tested on Visual Studio Community 2019
+//题目：正整数1、2、3、4依次进栈，写出所有可能的出栈次序
 //方法：运用二叉搜索树解决
 #include <iostream>
 #include <stack>
