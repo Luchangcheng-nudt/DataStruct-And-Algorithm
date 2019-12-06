@@ -95,7 +95,7 @@ int main()
 
 	int size = ans.size();
 	for (i = 0; i < size - 1; i++)
-		cout << ans[i] << " ";
+		cout << ans[i];
 	cout << ans[size - 1];
 
 	return 0;
