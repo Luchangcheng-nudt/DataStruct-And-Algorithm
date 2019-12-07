@@ -1,5 +1,5 @@
 //Programer: Luchangcheng  2019/12/7
-//Compiler: gcc version 4.9.2 (x86_64-posix-seh-rev1, Built by MinGW-W64 project)  tested on VSCode
+//Compiler: gcc version 4.9.2 (x86_64-posix-seh-rev1, Built by MinGW-W64 project)  tested on VSCode  --std = C++11
 #include <iostream>
 #define MAXSIZE 100
 using namespace std;
