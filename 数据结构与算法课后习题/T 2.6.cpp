@@ -1,5 +1,5 @@
 //Program by Luchangcheng  2019/12/6
-//Compiler: MSVC14.23  tested on Visual Studio 2019
+//Compiler: MSVC14.23  tested on Visual Studio 2019   --std = C++17
 //题目：将中缀表达式转换成后缀表达式的算法
 #include <iostream>
 #include <stack>
