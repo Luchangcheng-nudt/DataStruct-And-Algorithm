@@ -22,7 +22,7 @@ int main()
 
 void BinarySearchTree(int step, stack<int> spnd, string ans)
 {
-	if (step == 11)
+	if (step == 4)
 	{
 		while (!spnd.empty())
 		{
