@@ -1,16 +1,6 @@
-#include <iostream>
+//Programer: Luchangcheng  2019/12/8
+//Compiler: gcc version 4.9.2 (x86_64-posix-seh-rev1, Built by MinGW-W64 project)  tested on VSCode  --std = C++11
 #include <vector>
-using namespace std;
-
-bool match(char MidString[]);
-int main()
-{
-	char midstring[100] = {0};
-	cin >> midstring;
-	cout << match(midstring);
-	return 0;
-}
-
 bool isPalindrome(vector<char>& Vector)
 {
 	int size = Vector.size();
