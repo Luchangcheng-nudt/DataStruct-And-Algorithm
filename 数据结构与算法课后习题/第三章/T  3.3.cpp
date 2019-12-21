@@ -1,3 +1,5 @@
+//Programer: Luchangcheng  2019/12/21
+//Compiler: gcc version 7.4.0 (Ubuntu 7.4.0-1ubuntu1~18.04.1)  tested on VSCode  Ubuntu 18.04.3 LTS
 void Josephus(Node* list, int n, int s, int m)
 {
     Node* tail = list;
