@@ -31,24 +31,27 @@ int main()
     return 0;
 }
 
-node* createlist(int n)
+Node* createList(int n)
 {
-    int temp;
-    node *head = NULL, *tail = NULL;
-    head = tail = new node;
-    while (n--)
+    if (!n)
+        return NULL;
+    Node* head = NULL;
+    Node* tail = NULL;
+    head = tail = new Node;
+    
+    int temp = 0;
+    cin >> temp;
+    head->data = temp;
+    head->next = NULL;
+    for (int i = 1; i < n; i++)
     {
         cin >> temp;
-        node *tmp = new node;
+        Node* tmp = new Node;
         tmp->data = temp;
-        tmp->next = NULL;
         tail->next = tmp;
         tail = tmp;
     }
-    node *tar = head;
-    head = head->next;
     tail->next = NULL;
-    delete tar;
     return head;
 }
 node *insertElem(node* list, int data, int index)
