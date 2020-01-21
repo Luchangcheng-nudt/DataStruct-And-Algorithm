@@ -1,5 +1,5 @@
 //Programer: Luchangcheng  2020/1/15
-//Compiler: gcc version 8.1.0 (x86_64-win32-sjlj-rev0, Built by MinGW-W64 project)  C11 Standard
+//Compiler: gcc version 8.1.0 (x86_64-win32-sjlj-rev0, Built by MinGW-W64 project)  WinX64  C11 Standard
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
