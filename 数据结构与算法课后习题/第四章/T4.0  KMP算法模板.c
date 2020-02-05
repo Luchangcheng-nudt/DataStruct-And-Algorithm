@@ -24,7 +24,7 @@ void GenNext(char p[], int next[])
 {
     int i = 0;
     int j = -1;
-    int length = strlen(p) - 1;
+    size_t length = strlen(p) - 1;
     next[0] = -1;
 
     while (i < length)
@@ -44,8 +44,8 @@ int KMP(char s[], char p[], int next[])
 {
     int i = 0;
     int j = 0;
-    int s_size = strlen(s);
-    int p_size = strlen(p);
+    size_t s_size = strlen(s);
+    size_t p_size = strlen(p);
 
     while (i < s_size && j < p_size)
     {
