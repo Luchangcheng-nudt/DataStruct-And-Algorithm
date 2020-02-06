@@ -45,7 +45,7 @@ template<class T>
 void LinkHashTable<T>::InsertNode(T data)
 {
     int hash = this->Hash(data);
-    if (hash > this->curSize)
+    while (hash > this->curSize)
         this->ExpandTable();
     
     int t = 0;
