@@ -1,7 +1,7 @@
 //Programmer: Luchangcheng  2020/02/06
 //Compiler: gcc version 9.2.1 20191008 (Ubuntu 9.2.1-9ubuntu2)   std=C++11  tested on Ubuntu Kylin 19.10.1
-
 #include <iostream>
+#define ERROR -1
 using namespace std;
 
 template<class T>
@@ -23,6 +23,7 @@ public:
     ~LinkHashTable();
     void InsertNode(T data);
     void VisitTable();
+    int DeleteNode(T data);
     void Find(T data);
 };
 
@@ -139,6 +140,39 @@ void LinkHashTable<T>::Find(T data)
         cout << "找到数据，在Hash值为 " << hash << " 的第 " << y << " 个位置" << endl;
     else 
         cout << "查找失败，数据未在Hash表中" << endl; 
+}
+
+template<class T>
+int LinkHashTable<T>::DeleteNode(T data)
+{
+    int hash = this->Hash(data);
+    int t = 0;
+    Node* table = this->head;
+    while (t < hash)
+    {
+        t++;
+        table = table->next;
+    }
+
+    Node* preNode = table;
+    Node* ptr = table->near;
+    int y = 1;
+    while (ptr != NULL && ptr->data != data)
+    {
+        preNode = preNode->near;
+        ptr = ptr->near;
+        y++;
+    }
+    
+    if (ptr != NULL)
+    {
+        Node* temp = ptr;
+        preNode->near = temp->near;
+        delete temp;
+        return 0;
+    }
+    else 
+        return ERROR;
 }
 
 template<class T>
