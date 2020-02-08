@@ -12,11 +12,13 @@ struct Node
     EleType data;
     TreeNode* left;
     TreeNode* right;
+    TreeNode* lflag;
+    TreeNode* rflag;
 };
 
 //BinaryTree Operation
-void InitBTNode(TreeNode* root, EleType e, TreeNode* left, TreeNode* right);
-TreeNode* CreateBTNode(EleType item, TreeNode* lptr, TreeNode* rptr);
+inline void InitBTNode(TreeNode* root, EleType e, TreeNode* left, TreeNode* right);
+inline TreeNode* CreateBTNode(EleType item, TreeNode* lptr, TreeNode* rptr);
 TreeNode* BuildBTree(EleType data[], int len);
 void PostOrder(TreeNode* root);
 void StackPostOrder(TreeNode* root);
@@ -29,21 +31,21 @@ int main()
 {
     char list[] = "abcdef";
     TreeNode* root = BuildBTree(list, strlen(list));
-    
+
     StackPostOrder(root);
     StackInOrder(root);
     StackPreOrder(root);
     return 0;
 }
 
-void InitBTNode(TreeNode* root, EleType e, TreeNode* leftNode, TreeNode* rightNode)
+inline void InitBTNode(TreeNode* root, EleType e, TreeNode* leftNode, TreeNode* rightNode)
 {
     root->left = leftNode;
     root->right = rightNode;
     root->data = e;
 }
 
-TreeNode* CreateBTNode(EleType item, TreeNode* lptr, TreeNode* rptr)
+inline TreeNode* CreateBTNode(EleType item, TreeNode* lptr, TreeNode* rptr)
 {
     TreeNode* p = (TreeNode*)malloc(sizeof(TreeNode));
     if (p == NULL)
@@ -136,7 +138,7 @@ void InOrder(TreeNode* root)
 
 void StackInOrder(TreeNode* root)
 {
-    TreeNode* stack[1000] = {NULL};
+    TreeNode* stack[MAXSIZE] = {NULL};
     int curSize = -1;
     TreeNode* cur = root;
     
@@ -169,7 +171,7 @@ void PreOrder(TreeNode* root)
 
 void StackPreOrder(TreeNode* root)
 {
-    TreeNode* stack[1000] = {NULL};
+    TreeNode* stack[MAXSIZE] = {NULL};
     int curSize = -1;
     TreeNode* cur = root;
     
