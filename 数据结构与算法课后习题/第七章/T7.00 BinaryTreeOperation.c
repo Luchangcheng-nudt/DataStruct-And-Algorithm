@@ -66,10 +66,9 @@ TreeNode* BuildBTree(EleType list[], int len)
     for (int i = 1; i <= (len >> 1); i++)
     {
         int p = i << 1;
-        int q = (i << 1) + 1;
-
         if (p < len && box[i] != NULL)
         {
+            int q = (i << 1) + 1;
             if (q < len)
                 InitBTNode(box[i], box[i]->data, box[p], box[q]);
             else 
