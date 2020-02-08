@@ -12,8 +12,6 @@ struct Node
     EleType data;
     TreeNode* left;
     TreeNode* right;
-    TreeNode* lflag;
-    TreeNode* rflag;
 };
 
 //BinaryTree Operation
