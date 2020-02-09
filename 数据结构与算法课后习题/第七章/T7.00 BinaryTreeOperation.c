@@ -76,13 +76,14 @@ TreeNode* BuildBTree(EleType list[], int len)
         }
     }
     
+    TreeNode* ans = (box[1] != NULL) ? box[1] : NULL;
     for (int i = 0; i < len; i++)
     {
         if (box[i] == NULL)
             free(box[i]);
     }
     
-    return box[1] != NULL ? box[1] : NULL;
+    return ans;
 }
 
 void PostOrder(TreeNode* root)
