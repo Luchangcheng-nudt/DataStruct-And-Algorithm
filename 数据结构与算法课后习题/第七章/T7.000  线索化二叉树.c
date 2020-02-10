@@ -18,21 +18,22 @@ struct Node
 };
 
 //BinaryTree Operation
-inline void InitBTNode(TreeNode* root, EleType e, TreeNode* left, TreeNode* right);
-inline TreeNode* CreateBTNode(EleType item, TreeNode* lptr, TreeNode* rptr);
+void InitBTNode(TreeNode* root, EleType e, TreeNode* left, TreeNode* right);
+TreeNode* CreateBTNode(EleType item, TreeNode* lptr, TreeNode* rptr);
 TreeNode* BuildBTree(EleType data[], int len);
-void InOrderThreaded(TreeNode* p, TreeNode*& pre);
+void InOrderThreaded(TreeNode* p);
 void ThreadedInTravel(TreeNode* p);
+TreeNode* pre = NULL;
 
 int main()
 {
     char list[] = "abcdef";
     TreeNode* root = BuildBTree(list, strlen(list));
     TreeNode* pre = NULL;
-    InOrderThreaded(root, pre);
+    InOrderThreaded(root);
     ThreadedInTravel(root);
     
-    
+    printf("\n");
     return 0;
 }
 
@@ -88,25 +89,46 @@ TreeNode* BuildBTree(EleType list[], int len)
     return ans;
 }
 
-void InOrderThreaded(TreeNode* p, TreeNode*& pre)
+void InOrderThreaded(TreeNode* p)
 {
-    if (p != NULL)
+    TreeNode* stack[MAXSIZE] = {NULL};
+    int curSize = -1;
+    TreeNode* list[MAXSIZE] = {NULL};
+    int listSize = 0;
+    TreeNode* cur = p;
+
+    while (cur != NULL || curSize != -1)
     {
-        InOrderThreaded(p->left, pre);
-
-        if (p->left == NULL)
+        if (cur != NULL)
         {
-            p->lflag = 1;
-            p->left = pre;
+            stack[++curSize] = cur;
+            cur = cur->left;
         }
-        if (pre != NULL && pre->rflag == NULL)
+        else
         {
-            pre->rflag = 1;
-            pre->right = p;
+            cur = stack[curSize];
+            stack[curSize--] = NULL;
+            list[listSize++] = cur;
+            cur = cur->right;
         }
-        pre = p;
+    }
 
-        InOrderThreaded(p->right, pre);
+    TreeNode* pre = NULL;
+    for (int i = 0; i < listSize; i++)//将排好遍历顺序的二叉树结点依次遍历，按照规则线索化
+    {
+        if (pre != NULL && pre->rflag == 1)
+            pre->right = list[i];
+        
+        if (list[i]->left == NULL)
+        {
+            list[i]->lflag = 1;
+            list[i]->left = pre;
+        }
+
+        if (list[i]->right == NULL)
+            list[i]->rflag = 1;
+        
+        pre = list[i];
     }
 }
 
@@ -114,7 +136,7 @@ void ThreadedInTravel(TreeNode* p)
 {
     if (p != NULL)
     {
-        while (p != NULL && p->lflag == 0)
+        while (p->lflag == 0)
             p = p->left;//找到最左下角的点，即中序遍历的起点
         
         do
@@ -125,7 +147,7 @@ void ThreadedInTravel(TreeNode* p)
             else
             {
                 p = p->right;
-                while (p != NULL && p->lflag == 0)//该节点存在右子树，未被线索化，则找到下一个左下角的点
+                while (p->lflag == 0)//该节点存在右子树，未被线索化，则找到下一个左下角的点
                     p = p->left;
             }
         } while (p != NULL);
