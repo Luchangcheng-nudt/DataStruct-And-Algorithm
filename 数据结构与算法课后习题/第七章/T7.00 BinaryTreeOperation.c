@@ -15,8 +15,8 @@ struct Node
 };
 
 //BinaryTree Operation
-inline void InitBTNode(TreeNode* root, EleType e, TreeNode* left, TreeNode* right);
-inline TreeNode* CreateBTNode(EleType item, TreeNode* lptr, TreeNode* rptr);
+void InitBTNode(TreeNode* root, EleType e, TreeNode* left, TreeNode* right);
+TreeNode* CreateBTNode(EleType item, TreeNode* lptr, TreeNode* rptr);
 TreeNode* BuildBTree(EleType data[], int len);
 void PostOrder(TreeNode* root);
 void StackPostOrder(TreeNode* root);
@@ -27,12 +27,16 @@ void StackPreOrder(TreeNode* root);
 
 int main()
 {
-    char list[] = "abcdef";
+    char list[] = {'A', 'B', 'G', 'C', 'D', 'H', 'I', 'E', 'F', -1, -1, -1, -1, 'J', 'K'};
     TreeNode* root = BuildBTree(list, strlen(list));
-
-    StackPostOrder(root);
-    StackInOrder(root);
-    StackPreOrder(root);
+    
+    PreOrder(root);
+    printf("\n");
+    InOrder(root);
+    printf("\n");
+    PostOrder(root);
+    printf("\n");
+    
     return 0;
 }
 
