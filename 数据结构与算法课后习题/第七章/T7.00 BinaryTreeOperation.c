@@ -1,5 +1,5 @@
 //Programmer: Luchangcheng  2020/02/08
-//Compiler: gcc version 9.2.1 20191008 (Ubuntu 9.2.1-9ubuntu2)  std=C++11  tested on Ubuntu Kylin 19.10.1
+//Compiler: gcc version 9.2.1 20191008 (Ubuntu 9.2.1-9ubuntu2)  std=C11  tested on Ubuntu Kylin 19.10.1
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
