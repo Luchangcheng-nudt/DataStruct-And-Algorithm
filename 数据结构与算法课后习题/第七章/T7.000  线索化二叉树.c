@@ -1,5 +1,5 @@
 //Programmer: Luchangcheng  2020/02/09
-//Compiler: gcc version 8.1.0 (x86_64-win32-sjlj-rev0, Built by MinGW-W64 project)  std=c11  tested on Windows 10
+//Compiler: gcc version 9.2.1 20191008 (Ubuntu 9.2.1-9ubuntu2)  std=c11  tested on Ubuntu Kylin 19.10.1
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -21,15 +21,15 @@ struct Node
 void InitBTNode(TreeNode* root, EleType e, TreeNode* left, TreeNode* right);
 TreeNode* CreateBTNode(EleType item, TreeNode* lptr, TreeNode* rptr);
 TreeNode* BuildBTree(EleType data[], int len);
-void InOrderThreaded(TreeNode* p);
+void InOrderThreaded(TreeNode* p);//非递归中序线索化二叉树实现
 void ThreadedInTravel(TreeNode* p);
-TreeNode* pre = NULL;
+
 
 int main()
 {
     char list[] = "abcdef";
     TreeNode* root = BuildBTree(list, strlen(list));
-    TreeNode* pre = NULL;
+
     InOrderThreaded(root);
     ThreadedInTravel(root);
     
@@ -89,13 +89,12 @@ TreeNode* BuildBTree(EleType list[], int len)
     return ans;
 }
 
-void InOrderThreaded(TreeNode* p)
+void InOrderThreaded(TreeNode* p)//非递归中序线索化二叉树实现
 {
     TreeNode* stack[MAXSIZE] = {NULL};
     int curSize = -1;
-    TreeNode* list[MAXSIZE] = {NULL};
-    int listSize = 0;
     TreeNode* cur = p;
+    TreeNode* pre = NULL;
 
     while (cur != NULL || curSize != -1)
     {
@@ -108,27 +107,22 @@ void InOrderThreaded(TreeNode* p)
         {
             cur = stack[curSize];
             stack[curSize--] = NULL;
-            list[listSize++] = cur;
+
+            //按照规则，依次将结点线索化
+            if (pre != NULL && pre->rflag == 1)
+                pre->right = cur;
+            if (cur->left == NULL)
+            {
+                cur->lflag = 1;
+                cur->left = pre;
+            }
+            if (cur->right == NULL)
+                cur->rflag = 1;
+            pre = cur;
+            //×××××××××××××××××××××
+
             cur = cur->right;
         }
-    }
-
-    TreeNode* pre = NULL;
-    for (int i = 0; i < listSize; i++)//将排好遍历顺序的二叉树结点依次遍历，按照规则线索化
-    {
-        if (pre != NULL && pre->rflag == 1)
-            pre->right = list[i];
-        
-        if (list[i]->left == NULL)
-        {
-            list[i]->lflag = 1;
-            list[i]->left = pre;
-        }
-
-        if (list[i]->right == NULL)
-            list[i]->rflag = 1;
-        
-        pre = list[i];
     }
 }
 
