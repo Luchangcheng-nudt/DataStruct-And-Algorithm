@@ -64,6 +64,7 @@ TreeNode* BuildBTree(EleType list[], int len)
 {
     ++len;
     TreeNode** box = (TreeNode**)malloc(sizeof(TreeNode*) * len);
+    box[0] = NULL;
     for (int i = 1; i < len; i++)
         box[i] = (list[i-1] != -1 ? CreateBTNode(list[i - 1], NULL, NULL) : NULL);
 
