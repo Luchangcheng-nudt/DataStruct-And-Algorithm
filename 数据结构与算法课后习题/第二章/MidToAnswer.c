@@ -47,9 +47,9 @@ int CaculateInLine(char* line)
                 {
                     while (OpeStack[cur2] != '(')
                     {
-                        char chr = OpeStack[cur2];
-                        int num1 = NumStack[cur1];
-                        int num2 = NumStack[cur1];
+                        char chr = OpeStack[cur2--];
+                        int num1 = NumStack[cur1--];
+                        int num2 = NumStack[cur1--];
                         switch (chr)
                         {
                         case '+':
@@ -81,9 +81,9 @@ int CaculateInLine(char* line)
             {
                 if (cur2 != -1 && OpeStack[cur2] != '(' && OpeStack[cur2] != '+' && OpeStack[cur2] != '-')
                 {
-                    char chr = OpeStack[cur2];
-                    int num1 = NumStack[cur1];
-                    int num2 = NumStack[cur1];
+                    char chr = OpeStack[cur2--];
+                    int num1 = NumStack[cur1--];
+                    int num2 = NumStack[cur1--];
                     switch (chr)
                     {
                     case '+':
@@ -108,9 +108,9 @@ int CaculateInLine(char* line)
             {
                 if (cur2 != -1 && OpeStack[cur2] != '(')
                 {
-                    char chr = OpeStack[cur2];
-                    int num1 = NumStack[cur1];
-                    int num2 = NumStack[cur1];
+                    char chr = OpeStack[cur2--];
+                    int num1 = NumStack[cur1--];
+                    int num2 = NumStack[cur1--];
                     switch (chr)
                     {
                     case '+':
@@ -137,9 +137,9 @@ int CaculateInLine(char* line)
 
     while (cur2 != -1)
     {
-        char chr = OpeStack[cur2];
-        int num1 = NumStack[cur1];
-        int num2 = NumStack[cur1];
+        char chr = OpeStack[cur2--];
+        int num1 = NumStack[cur1--];
+        int num2 = NumStack[cur1--];
         switch (chr)
         {
         case '+':
