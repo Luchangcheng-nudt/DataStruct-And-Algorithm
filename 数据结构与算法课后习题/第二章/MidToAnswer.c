@@ -1,11 +1,33 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#define OutStack(NumStack, OpeStack, cur1, cur2)\
+    char chr = OpeStack[cur2--];\
+    int num1 = NumStack[cur1--];\
+    int num2 = NumStack[cur1--];\
+    switch (chr)\
+    {\
+    case '+':\
+        NumStack[++cur1] = num2 + num1;\
+        break;\
+    case '-':\
+        NumStack[++cur1] = num2 - num1;\
+        break;\
+    case '*':\
+        NumStack[++cur1] = num2 * num1;\
+        break;\
+    case '/':\
+        NumStack[++cur1] = num2 / num1;\
+        break;\
+    default:\
+        break;\
+    }
 
 int CaculateInLine(char* line);
 int main()
 {
-    char line[] = "8-(3+5-4/2)*2/3";
+    char line[128] = {0};
+  	scanf("%s", line);
     printf("%d\n", CaculateInLine(line));
 
     return 0;
@@ -19,8 +41,8 @@ int CaculateInLine(char* line)
     char* OpeStack = (char*)malloc(sizeof(int) * length);
     int cur2 = -1;
 
-    __int8_t flag = 0;
-    __int8_t i = 0;
+    int flag = 0;
+    int i = 0;
     int num = 0;
     while (i < length)
     {
@@ -47,26 +69,7 @@ int CaculateInLine(char* line)
                 {
                     while (OpeStack[cur2] != '(')
                     {
-                        char chr = OpeStack[cur2--];
-                        int num1 = NumStack[cur1--];
-                        int num2 = NumStack[cur1--];
-                        switch (chr)
-                        {
-                        case '+':
-                            NumStack[++cur1] = num2 + num1;
-                            break;
-                        case '-':
-                            NumStack[++cur1] = num2 - num1;
-                            break;
-                        case '*':
-                            NumStack[++cur1] = num2 * num1;
-                            break;
-                        case '/':
-                            NumStack[++cur1] = num2 / num1;
-                            break;
-                        default:
-                            break;
-                        }
+                        OutStack(NumStack, OpeStack, cur1, cur2);
                     }
                     cur2--;
                     flag = 0;
@@ -81,26 +84,7 @@ int CaculateInLine(char* line)
             {
                 if (cur2 != -1 && OpeStack[cur2] != '(' && OpeStack[cur2] != '+' && OpeStack[cur2] != '-')
                 {
-                    char chr = OpeStack[cur2--];
-                    int num1 = NumStack[cur1--];
-                    int num2 = NumStack[cur1--];
-                    switch (chr)
-                    {
-                    case '+':
-                        NumStack[++cur1] = num2 + num1;
-                        break;
-                    case '-':
-                        NumStack[++cur1] = num2 - num1;
-                        break;
-                    case '*':
-                        NumStack[++cur1] = num2 * num1;
-                        break;
-                    case '/':
-                        NumStack[++cur1] = num2 / num1;
-                        break;
-                    default:
-                        break;
-                    }
+                    OutStack(NumStack, OpeStack, cur1, cur2);
                 }
                 OpeStack[++cur2] = line[i];
             }
@@ -108,26 +92,7 @@ int CaculateInLine(char* line)
             {
                 if (cur2 != -1 && OpeStack[cur2] != '(')
                 {
-                    char chr = OpeStack[cur2--];
-                    int num1 = NumStack[cur1--];
-                    int num2 = NumStack[cur1--];
-                    switch (chr)
-                    {
-                    case '+':
-                        NumStack[++cur1] = num2 + num1;
-                        break;
-                    case '-':
-                        NumStack[++cur1] = num2 - num1;
-                        break;
-                    case '*':
-                        NumStack[++cur1] = num2 * num1;
-                        break;
-                    case '/':
-                        NumStack[++cur1] = num2 / num1;
-                        break;
-                    default:
-                        break;
-                    }
+                    OutStack(NumStack, OpeStack, cur1, cur2);
                 }
                 OpeStack[++cur2] = line[i];
             }
@@ -137,26 +102,7 @@ int CaculateInLine(char* line)
 
     while (cur2 != -1)
     {
-        char chr = OpeStack[cur2--];
-        int num1 = NumStack[cur1--];
-        int num2 = NumStack[cur1--];
-        switch (chr)
-        {
-        case '+':
-            NumStack[++cur1] = num2 + num1;
-            break;
-        case '-':
-            NumStack[++cur1] = num2 - num1;
-            break;
-        case '*':
-            NumStack[++cur1] = num2 * num1;
-            break;
-        case '/':
-            NumStack[++cur1] = num2 / num1;
-            break;
-        default:
-            break;
-        }
+        OutStack(NumStack, OpeStack, cur1, cur2);
     }
     
     int ans = NumStack[0];
