@@ -1,61 +1,64 @@
-//Programer: Luchangcheng  2020/1/15
-//Compiler: gcc version 8.1.0 (x86_64-win32-sjlj-rev0, Built by MinGW-W64 project)  WinX64  C11 Standard
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
 
-void GenNext(char p[], int next[]);
-int KMP(char s[], char p[], int next[]);
+int KMP(char *t, char *p);
+void GenNext(char* p, int next[]);
 int main()
 {
-    char s[1000] = {0};
-    char p[1000] = {0};
-    scanf("%s", s);
-    scanf("%s", p);
-    int* next = (int*)malloc(sizeof(char) * strlen(p));
-    GenNext(p, next);
-    printf("%d\n", KMP(s, p, next));
+    int index = KMP("abcabca", "cab");
+    printf("%d\n", index);
 
-    free(next);
     return 0;
 }
 
-void GenNext(char p[], int next[])
+void GenNext(char* p, int next[])
 {
-    int i = 0;
-    int j = -1;
-    size_t length = strlen(p) - 1;
+    int i = 1;
+    int k = -1;
     next[0] = -1;
+    int len = strlen(p);
 
-    while (i < length)
+    while (i < len)
     {
-        while (j != -1 && next[i] != next[j])
-            j = next[j];
-        i++;
-        j++;
-        if (p[i] == p[j])
-            next[i] = next[j];
+        while (k > -1 && p[k] != p[i-1])
+            k = next[k];
+        k++;
+        if (p[k] != p[i])
+            next[i] = k;
         else 
-            next[i] = j;
+            next[i] = next[k];
+        i++;
     }
 }
 
-int KMP(char s[], char p[], int next[])
+int KMP(char *t, char *p)
 {
+    int t_length = strlen(t);
+    int p_length = strlen(p);
+    int *next = (int*)malloc(sizeof(int) * p_length);
+    GenNext(p, next);
     int i = 0;
     int j = 0;
-    size_t s_size = strlen(s);
-    size_t p_size = strlen(p);
 
-    while (i < s_size && j < p_size)
+    while (i < t_length && j < p_length)
     {
-        while (j != -1 && s[i] != p[j])
+        if (t[i] == p[j])
+        {
+            i++;
+            j++;
+        }
+        else if (next[j] > -1)
             j = next[j];
-        i++;
-        j++;
+        else 
+        {
+            j = 0;
+            i++;
+        }
     }
 
-    if (j == p_size)
+    free(next);
+    if (j >= p_length)
         return i - j;
     return -1;
 }
