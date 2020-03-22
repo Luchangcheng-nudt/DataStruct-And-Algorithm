@@ -1,25 +1,23 @@
-template<class T>
-void QuickSort(T list[], int left, int right)
+void QuickSort(int data[], int left, int right)
 {
-    if (left < right)
-    {
-        int i = left;
-        int j = right;
-        T basis = list[i];
+	if (left >= right)
+		return;
+	int i = left;
+	int j = right;
+	int temp = data[i];
 
-        while (i < j)
-        {
-            while (i < j && list[j] >= basis)
-                j--;
-            list[i] = list[j];
+	if (i < j)
+	{
+		while (i < j && temp < data[j])
+			j--;
+		data[i] = data[j];
 
-            while (i < j && list[i] <= basis)
-                i++;
-            list[j] = list[i];
-        }
-        list[i] = basis;
+		while (i < j && temp >= data[i]);
+			i++;
+		data[j] = data[i];
 
-        QuickSort(list, i + 1, right);
-        QuickSort(list, left, i - 1);
-    }
+		data[i] = temp;
+		QuickSort(data, left, i - 1);
+		QuickSort(data, i + 1, right);
+	}
 }
