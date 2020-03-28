@@ -1,33 +1,40 @@
-//Programmer: Luchangcheng  2020/2/13
-//Compiler: MSVC 14.23  tested on Windows 10
-void MergeSort(int data[], int left, int right)
+void MergeSort(ElementType data[], int n)
 {
-	if (left < right - 1)
+	int i = 1;
+	ElementType *ans = (ElementType*)malloc(n * sizeof(ElementType));
+
+	while (i < n)
 	{
-		int mid = (left + right) >> 1;
-		MergeSort(data, left, mid);
-		MergeSort(data, mid, right);
-		Merge(data, left, mid, right);
+		OnePassMerge(ans, data, i, n);
+		i <<= 1;
+
+		if (i < n)
+			OnePassMerge(data, ans, i, n);
+		else 
+			memcpy(data, ans, n * sizeof(ElementType));
 	}
+	free(ans);
 }
-
-void Merge(int data[], int left, int mid, int right)
+void OnePassMerge(ElementType Dst[], ElementType Src[], int len, int n)
 {
-	int* list = (int*)malloc((right - left) * sizeof(int));
-	int i = left;
+	int i = 0;
+	for (i; i < n - (len << 1); i += (len << 1))
+		TwoPassMerge(Dst, Src, i, i + len, i + (len << 1));
+
+	if (i < n - len)
+		TwoPassMerge(Dst, Src, i, i + len, n);
+	else
+		memcpy(&Dst[i], &Src[i], (n - i) * sizeof(ElementType));
+}
+void TwoPassMerge(ElementType Dst[], ElementType Src[], int low, int mid, int high)
+{
+	int i = low;
 	int j = mid;
-	int t = 0;
-
-	while (i < mid && j < right)
-		list[t++] = data[i] < data[j] ? data[i++] : data[j++];
-	while (i < mid)
-		list[t++] = data[i++];
-	while (j < right)
-		list[t++] = data[j++];
-
-	for (i = 0; i < t; i++)
-		data[left++] = list[i];
+	for (i, j; i < mid && j < high;)
+		Dst[low++] = Src[i] < Src[j] ? Src[i++] : Src[j++];
 	
-	free(list);
-	list = NULL;
+	if (i < mid)
+		memcpy(&Dst[low], &Src[i], (mid - i) * sizeof(ElementType));
+	if (j < high)
+		memcpy(&Dst[low], &Src[j], (high - mid) * sizeof(ElementType));
 }
