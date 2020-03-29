@@ -1,198 +1,127 @@
-//Programmer: Luchangcheng  2020/02/08
-//Compiler: gcc version 9.2.1 20191008 (Ubuntu 9.2.1-9ubuntu2)  std=C11  tested on Ubuntu Kylin 19.10.1
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#define MAXSIZE 0x7f
-typedef char EleType;
-typedef struct Node TreeNode;
 
-struct Node
+typedef int ElementType;
+typedef struct btNode
 {
-    EleType data;
-    TreeNode* left;
-    TreeNode* right;
-};
+    ElementType data;
+    struct btNode *left;
+    struct btNode *right;
+}BTNode;
 
-//BinaryTree Operation
-void InitBTNode(TreeNode* root, EleType e, TreeNode* left, TreeNode* right);
-TreeNode* CreateBTNode(EleType item, TreeNode* lptr, TreeNode* rptr);
-TreeNode* BuildBTree(EleType data[], int len);
-void PostOrder(TreeNode* root);
-void StackPostOrder(TreeNode* root);
-void InOrder(TreeNode* root);
-void StackInOrder(TreeNode* root);
-void PreOrder(TreeNode* root);
-void StackPreOrder(TreeNode* root);
+BTNode* InitBTNode(ElementType data);
+BTNode* BuildTree(ElementType DataList[], int i, int n);
+void PreOrder(BTNode *root);
+void InOrder(BTNode *root);
+void PostOrder(BTNode *root);
 
 int main()
 {
-    char list[] = {'A', 'B', 'G', 'C', 'D', 'H', 'I', 'E', 'F', -1, -1, -1, -1, 'J', 'K'};
-    TreeNode* root = BuildBTree(list, strlen(list));
-    
+    ElementType data[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
+    BTNode *root = BuildTree(data, 0, 10);
+
     PreOrder(root);
-    printf("\n");
-    InOrder(root);
-    printf("\n");
-    PostOrder(root);
-    printf("\n");
-    
     return 0;
 }
 
-inline void InitBTNode(TreeNode* root, EleType e, TreeNode* leftNode, TreeNode* rightNode)
+BTNode* InitBTNode(ElementType data)
 {
-    root->left = leftNode;
-    root->right = rightNode;
-    root->data = e;
-}
-
-inline TreeNode* CreateBTNode(EleType item, TreeNode* lptr, TreeNode* rptr)
-{
-    TreeNode* p = (TreeNode*)malloc(sizeof(TreeNode));
-    if (p == NULL)
+    BTNode *ans = (BTNode*)malloc(sizeof(BTNode));
+    if (ans == NULL)
     {
-        printf("Memory allocation failure!\n");
+        printf("Memory allocate error!\n");
         exit(1);
     }
-    else 
-        InitBTNode(p, item, lptr, rptr);
-    return p;
-}
 
-TreeNode* BuildBTree(EleType list[], int len)
-{
-    ++len;
-    TreeNode** box = (TreeNode**)malloc(sizeof(TreeNode*) * len);
-    box[0] = NULL;
-    for (int i = 1; i < len; i++)
-        box[i] = (list[i-1] != -1 ? CreateBTNode(list[i - 1], NULL, NULL) : NULL);
-
-    for (int i = 1; i <= (len >> 1); i++)
-    {
-        int p = i << 1;
-        if (p < len && box[i] != NULL)
-        {
-            int q = (i << 1) + 1;
-            if (q < len)
-                InitBTNode(box[i], box[i]->data, box[p], box[q]);
-            else 
-                InitBTNode(box[i], box[i]->data, box[p], NULL);
-        }
-    }
-    
-    TreeNode* ans = (box[1] != NULL) ? box[1] : NULL;
-    for (int i = 0; i < len; i++)
-    {
-        if (box[i] == NULL)
-            free(box[i]);
-    }
-    
+    ans->data = data;
+    ans->left = NULL;
+    ans->right = NULL;
     return ans;
 }
 
-void PostOrder(TreeNode* root)
+BTNode* BuildTree(ElementType DataList[], int i, int n)
 {
-    if (root == NULL)
-        return;
-    PostOrder(root->left);
-    PostOrder(root->right);
-    printf("%c ", root->data);
+    if (DataList == NULL || i >= n || DataList[i] == -1)
+        return NULL;
+    
+    BTNode *ans = InitBTNode(DataList[i]);
+    ans->left = BuildTree(DataList, (i << 1) + 1, n);
+    ans->right = BuildTree(DataList, (i + 1) << 1, n);
 }
 
-void StackPostOrder(TreeNode* root)
+void PreOrder(BTNode* root)
 {
-    TreeNode* stack[MAXSIZE] = {NULL};
-    int curSize = -1;
-    TreeNode* cur = root;
-    TreeNode* old = NULL;
+    BTNode *stack[512] = {0};
+    int index = -1;
 
-    while (cur != NULL || curSize != -1)
+    while (index > -1 || root != NULL)
     {
-        if (cur != NULL)
+        if (root != NULL)
         {
-            stack[++curSize] = cur;
-            cur = cur->left;
+            printf("%d ", root->data);
+            stack[++index] = root;
+            root = root->left;
+        }
+        else 
+        {
+            root = stack[index--];
+            root = root->right;
+        }
+    }
+
+    printf("\n");
+}
+
+void InOrder(BTNode *root)
+{
+    BTNode *stack[512] = {0};
+    int index = -1;
+
+    while (index > -1 || root != NULL)
+    {
+        if (root != NULL)
+        {
+            stack[++index] = root;
+            root = root->left;
+        }
+        else 
+        {
+            root = stack[index--];
+            printf("%d ", root->data);
+            root = root->right;
+        }
+    }
+
+    printf("\n");
+}
+
+void PostOrder(BTNode *root)
+{
+    BTNode *stack[512] = {0};
+    int index = -1;
+    BTNode *old = NULL;
+
+    while (index > -1 || root != NULL)
+    {
+        if (root != NULL)
+        {
+            stack[++index] = root;
+            root = root->left;
         }
         else
         {
-            cur = stack[curSize];
-            if (cur->right != NULL && cur->right != old)
-                cur = cur->right;
+            root = stack[index];
+            if (root->right != NULL && root->right != old)
+                root = root->right;
             else
             {
-                stack[curSize--] = NULL;
-                printf("%c ", cur->data);
-                old = cur;
-                cur = NULL;
+                stack[index--] = NULL;
+                printf("%d ", root->data);
+                old = root;
+                root = NULL;
             }
         }
     }
-    printf("\n");
-}
 
-void InOrder(TreeNode* root)
-{
-    if (root == NULL)
-        return;
-    InOrder(root->left);
-    printf("%c ", root->data);
-    InOrder(root->right);
-}
-
-void StackInOrder(TreeNode* root)
-{
-    TreeNode* stack[MAXSIZE] = {NULL};
-    int curSize = -1;
-    TreeNode* cur = root;
-    
-    while (cur != NULL || curSize > -1)
-    {
-        if (cur != NULL)
-        {
-            stack[++curSize] = cur;
-            cur = cur->left;
-        }
-        else
-        {
-            cur = stack[curSize];
-            stack[curSize--] = NULL;
-            printf("%c ", cur->data);
-            cur = cur->right;
-        }
-    }
-    printf("\n");
-}
-
-void PreOrder(TreeNode* root)
-{
-    if (root == NULL)
-        return;
-    printf("%c ", root->data);
-    PreOrder(root->left);
-    PreOrder(root->right);
-}
-
-void StackPreOrder(TreeNode* root)
-{
-    TreeNode* stack[MAXSIZE] = {NULL};
-    int curSize = -1;
-    TreeNode* cur = root;
-    
-    while (cur != NULL || curSize > -1)
-    {
-        if (cur != NULL)
-        {
-            printf("%c ", cur->data);
-            stack[++curSize] = cur;
-            cur = cur->left;
-        }
-        else
-        {
-            cur = stack[curSize];
-            stack[curSize--] = NULL;
-            cur = cur->right;
-        }
-    }
     printf("\n");
 }
